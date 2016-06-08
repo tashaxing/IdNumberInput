@@ -76,6 +76,7 @@
 //button callback
 - (void)onClick:(UIButton *)button
 {
+    //respond to local button events
     if([button.currentTitle isEqualToString:@"delete"] && self.string > 0)
         [self.string deleteCharactersInRange:NSMakeRange(self.string.length-1, 1)];
     else

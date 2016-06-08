@@ -46,7 +46,6 @@
     //initalize the second textField
     _idCardNumberSelfDefine = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 140, 200, 280, 30)];
     [_idCardNumberSelfDefine setBorderStyle:UITextBorderStyleRoundedRect];
-//    [_idCardNumberSelfDefine setKeyboardType:UIKeyboardTypeNumberPad];
     [_idCardNumberSelfDefine setTextAlignment:UITextAlignmentLeft];
     [_idCardNumberSelfDefine setPlaceholder:@"input ID with defined keyboard"];
     [_idCardNumberSelfDefine setClearButtonMode:UITextFieldViewModeWhileEditing];
@@ -57,10 +56,7 @@
     self.numberKeyboard = [[NumberKeyboardView alloc] init];
     self.numberKeyboard.delegate = self;
     
-    _idCardNumberSelfDefine.inputView = self.numberKeyboard;
-    
-    
-    
+    _idCardNumberSelfDefine.inputView = self.numberKeyboard; //replace the input keyboard with selfdefined keypad
     
     //initialize the submit button
     self.submitBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, 150, 100, 20)];
@@ -68,11 +64,7 @@
     [_submitBtn setBackgroundColor:[UIColor blueColor]];
     [self.view addSubview:_submitBtn];
     [self.submitBtn addTarget:self action:@selector(onSubmitBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-    
-    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,15 +82,14 @@
     //choose which keyboard
     if(textField == _idCardNumberSystemModify)
     {
-        //delay some seconds because button appears after the keyboard
+        //delay some seconds because button appears after the keyboard, this method works but not well T_T
         [self performSelector:@selector(addXButtonToKeyboard) withObject:nil afterDelay:0.1];
     }
 }
 
-        
-
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    //when the keyboard hide, remove the Xbutton
     NSLog(@"keyboard end edit");
     if(textField == _idCardNumberSystemModify)
         [self removeXButtonFromKeyBoard];
