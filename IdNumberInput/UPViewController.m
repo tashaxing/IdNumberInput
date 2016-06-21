@@ -6,7 +6,7 @@
 //  Copyright © 2016年 yxhe. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "UPViewController.h"
 #import "NumberKeyboardView.h"
 
 #define KEY_WIDTH 106
@@ -15,29 +15,28 @@
 #define XBUTTON_MODIFY_TAG 8
 
 
-@interface ViewController ()<UITextFieldDelegate, NumberKeyBoardViewDelegate>
+@interface UPViewController ()<UITextFieldDelegate, NumberKeyBoardViewDelegate>
 
 @property UITextField *idCardNumberSystemModify; //keyboard modified from system keyboard
-@property UITextField *idCardNumberSelfDefine; //keyboard defined all by myself
-@property NumberKeyboardView *numberKeyboard; //the defined numberPad
+@property UITextField *idCardNumberSelfDefine;   //keyboard defined all by myself
+@property NumberKeyboardView *numberKeyboard;    //the defined numberPad
 
-@property UIButton *submitBtn; //the button to submit id number and hide keyboard
+@property UIButton *submitBtn;                   //the button to submit id number and hide keyboard
 
 @end
 
-@implementation ViewController
+@implementation UPViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    
     //initalize the first textField
     self.idCardNumberSystemModify = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 140, 100, 280, 30)];
     [_idCardNumberSystemModify setBorderStyle:UITextBorderStyleRoundedRect];
     [_idCardNumberSystemModify setKeyboardType:UIKeyboardTypeNumberPad];
-    [_idCardNumberSystemModify setTextAlignment:UITextAlignmentLeft];
+    [_idCardNumberSystemModify setTextAlignment:NSTextAlignmentLeft];
     [_idCardNumberSystemModify setPlaceholder:@"input ID with modified keyboard"];
     [_idCardNumberSystemModify setClearButtonMode:UITextFieldViewModeWhileEditing];
     [self.view addSubview:self.idCardNumberSystemModify];
@@ -46,7 +45,7 @@
     //initalize the second textField
     _idCardNumberSelfDefine = [[UITextField alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 140, 200, 280, 30)];
     [_idCardNumberSelfDefine setBorderStyle:UITextBorderStyleRoundedRect];
-    [_idCardNumberSelfDefine setTextAlignment:UITextAlignmentLeft];
+    [_idCardNumberSelfDefine setTextAlignment:NSTextAlignmentLeft];
     [_idCardNumberSelfDefine setPlaceholder:@"input ID with defined keyboard"];
     [_idCardNumberSelfDefine setClearButtonMode:UITextFieldViewModeWhileEditing];
     [self.view addSubview:_idCardNumberSelfDefine];
@@ -56,7 +55,8 @@
     self.numberKeyboard = [[NumberKeyboardView alloc] init];
     self.numberKeyboard.delegate = self;
     
-    _idCardNumberSelfDefine.inputView = self.numberKeyboard; //replace the input keyboard with selfdefined keypad
+    //replace the input keyboard with selfdefined keypad
+    _idCardNumberSelfDefine.inputView = self.numberKeyboard;
     
     //initialize the submit button
     self.submitBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, 150, 100, 20)];
@@ -70,7 +70,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - textField delegate functions
@@ -92,7 +91,9 @@
     //when the keyboard hide, remove the Xbutton
     NSLog(@"keyboard end edit");
     if(textField == _idCardNumberSystemModify)
+    {
         [self removeXButtonFromKeyBoard];
+    }
 }
 
 #pragma mark - modify method:add button and callback
@@ -102,7 +103,6 @@
     [self addXButtonToKeyboardWithSelector:@selector(onXButtonClicked)
                      normalImg:[UIImage imageNamed:@"Xbutton_normal.png"]
                   highlightImg:[UIImage imageNamed:@"Xbutton_highlight.png"]];
-
 }
 
 - (void)addXButtonToKeyboardWithSelector:(SEL)button_callback normalImg:(UIImage *)normal_icon highlightImg:(UIImage *)highlight_icon
@@ -146,8 +146,6 @@
     NSLog(@"defined keyboard button clicked");
 }
 
-
-
 #pragma mark - submit button event
 - (void)onSubmitBtnClicked
 {
@@ -156,8 +154,5 @@
     [self.idCardNumberSystemModify resignFirstResponder];
     [self.idCardNumberSelfDefine resignFirstResponder];
 }
-
-
-
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "NumberKeyboardView.h"
-#import "ViewController.h"
+#import "UPViewController.h"
 
 #define KEYBOARD_HEIGHT 216
 
@@ -59,6 +59,7 @@
     
     
     for(int i = 0; i < 4; i++)
+    {
         for(int j = 0; j < 3; j++)
         {
             float x = 5 + j*(button_width + 10);
@@ -69,8 +70,11 @@
             [button setBackgroundColor:[UIColor whiteColor]];
             [self addSubview:button];
             
+            //increase index
             index++;
         }
+    }
+    
 }
 
 //button callback
@@ -78,9 +82,13 @@
 {
     //respond to local button events
     if([button.currentTitle isEqualToString:@"delete"] && self.string > 0)
+    {
         [self.string deleteCharactersInRange:NSMakeRange(self.string.length-1, 1)];
+    }
     else
+    {
         [self.string appendString:button.currentTitle];
+    }
     
     //call the delegate, first make sure it can respond to selector, then do the delegate method
     if ([self.delegate respondsToSelector:@selector(keyboard:didClickButton:withFieldString:)])
