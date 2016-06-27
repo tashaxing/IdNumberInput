@@ -54,8 +54,8 @@
     
     //design the keyboard
     int index = 0;
-    float button_width = (SCREEN_SIZE.width - 30)/3;
-    float button_height = (KEYBOARD_HEIGHT - 40)/4;
+    float button_width = (SCREEN_SIZE.width - 30) / 3;
+    float button_height = (KEYBOARD_HEIGHT - 40) / 4;
     
     
     for(int i = 0; i < 4; i++)
@@ -92,7 +92,11 @@
     
     //call the delegate, first make sure it can respond to selector, then do the delegate method
     if ([self.delegate respondsToSelector:@selector(keyboard:didClickButton:withFieldString:)])
+    {
         [self.delegate keyboard:self didClickButton:button withFieldString:self.string];
+
+    }
+    
 }
 
 @end
